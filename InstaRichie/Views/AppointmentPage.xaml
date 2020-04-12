@@ -78,10 +78,12 @@
             <controls:PageHeader.PrimaryCommands>
                 <AppBarButton Icon="Add" Label="Add Appointment" Click="AddButton_Click"/>
                 <AppBarButton Icon="Delete" Label="Delete Appointment" Click="DelButton_Click"/>
+                <AppBarButton Icon="Edit" Label="Edit Appointment" Click="EditButton_Click"/>
             </controls:PageHeader.PrimaryCommands>
             
         </controls:PageHeader>
-        
+
+
         <!-- Actual Page Contents -->
 
         <Pivot>
@@ -103,8 +105,11 @@
                         <TimePicker x:Name="EndTimeStamp" Header="Appointment End Time" VerticalAlignment="Stretch"/>
                     </StackPanel>
 
+
+
+
                     <ListView x:Name="AppointmentList" Grid.Row="1" ItemTemplate="{StaticResource AppointListView}"
-                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="AppointmentList_SelectionChanged">
                         <RelativePanel.Below>PageStart</RelativePanel.Below>
                     </ListView>
                     
