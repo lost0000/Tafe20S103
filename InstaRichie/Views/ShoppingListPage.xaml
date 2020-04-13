@@ -1,0 +1,127 @@
+﻿<Page
+    x:Class="StartFinance.Views.ShoppingListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:StartFinance.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:StartFinance.ViewModels"
+    xmlns:controls="using:Template10.Controls"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <DataTemplate x:Key="ShoppingList">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding ShoppingItemID}" Padding="0,0,15,0"/>
+                    <TextBlock Text="{Binding ShopName}" Padding="0,0,15,0"/>
+                    <TextBlock Text="{Binding ItemName}" Padding="0,0,15,0"/>
+                    <TextBlock Text="{Binding ShoppingDate}" Padding="0,0,15,0"/>
+                    <TextBlock Text="{Binding QuotedPrice}"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Page.DataContext>
+        <vm:MainPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO: change properties for narrow view  -->
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateNormal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO: change properties for normal view  -->
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateWide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO: change properties for wide view  -->
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <controls:PageHeader x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True"
+			RelativePanel.AlignRightWithPanel="True"
+			RelativePanel.AlignTopWithPanel="True" Text="Add/Remove Accounts" Content="Add/Edit/Remove Shopping Item">
+
+            <!--  secondary commands  -->
+            <controls:PageHeader.SecondaryCommands>
+                <AppBarButton Click="{x:Bind ViewModel.GotoSettings}" Label="Settings" />
+                <AppBarButton Click="{x:Bind ViewModel.GotoPrivacy}" Label="Privacy" />
+                <AppBarButton Click="{x:Bind ViewModel.GotoAbout}" Label="About" />
+            </controls:PageHeader.SecondaryCommands>
+        </controls:PageHeader>
+
+        <controls:PageHeader x:Name="pageFooter" RelativePanel.AlignLeftWithPanel="True"
+			RelativePanel.AlignRightWithPanel="True"
+			RelativePanel.AlignBottomWithPanel="True">
+
+            <!--  secondary commands  -->
+            <controls:PageHeader.PrimaryCommands>
+                <AppBarButton Icon="Add" Label="Add Shopping Item" Click="AddButton_Click"  />
+                <AppBarButton Icon="Delete" Label="Delete Shopping Item" Click="DeleteButton_Click" />
+            </controls:PageHeader.PrimaryCommands>
+        </controls:PageHeader>
+
+
+        <Pivot>
+            <RelativePanel.Below>pageHeader</RelativePanel.Below>
+            <RelativePanel.Above>pageFooter</RelativePanel.Above>
+            <PivotItem Header="Shopping List">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="385"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!--ACTUAL CONTENT-->
+                    <StackPanel x:Name="PageStart" Grid.Row="0" VerticalAlignment="Top"
+                        HorizontalAlignment="Stretch"
+                        Orientation="Vertical" Margin="10,5,10,0">
+
+                        <TextBlock x:Name="tblShoppingItemID" Text="Shopping ID: "/>
+                        <TextBox x:Name="tbShoppingItemID" TextWrapping="Wrap"/>
+
+                        <TextBlock x:Name="tblShopName" Text="Shop Name: "/>
+                        <TextBox x:Name="tbShopName" />
+
+                        <TextBlock x:Name="tblItemName" Text="Item Name"/>
+                        <TextBox x:Name="tbItemName" />
+
+                        <TextBlock x:Name="tblShoppingDate" Text="Shopping Date: "/>
+                        <DatePicker x:Name="dpShoppingDate" Width="1456"/>
+
+                        <TextBlock x:Name="tblPriceQuoted" Text="Price Quoted: "/>
+                        <TextBox x:Name="tbPriceQuoted" />
+
+                    </StackPanel>
+                    <ListView x:Name="ShoppingList" ItemTemplate="{StaticResource ShoppingList}"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,270,0,15" Grid.RowSpan="2" RenderTransformOrigin="0.496,0.523">
+                        <RelativePanel.Below>PageStart</RelativePanel.Below>
+                    </ListView>
+                    <!--ACTUAL CONTENT-->
+                </Grid>
+            </PivotItem>
+        </Pivot>
+
+    </RelativePanel>
+</Page>
