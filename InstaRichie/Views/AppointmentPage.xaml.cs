@@ -41,6 +41,7 @@ namespace StartFinance.Views
         {
             conn.CreateTable<Appointments>();
             var query = conn.Table<Appointments>();
+            var query1 = conn.Table<Appointments>();
             AppointmentList.ItemsSource = query.ToList();
         }
 
@@ -137,5 +138,82 @@ namespace StartFinance.Views
                 await dialog.ShowAsync();
             }
         }
+
+        private async void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Get time and date data
+            string CDay = EvntDateStamp.Date.Value.Day.ToString();
+            string CMonth = EvntDateStamp.Date.Value.Month.ToString();
+            string CYear = EvntDateStamp.Date.Value.Year.ToString();
+            string FinalDate = "" + CMonth + "/" + CDay + "/" + CYear;
+
+
+            TimeSpan startTimeSpan = StartTimeStamp.Time;
+            TimeSpan endTimeSpan = EndTimeStamp.Time;
+
+
+            string StartTimeStr = startTimeSpan.ToString();
+            string EndTimeStr = endTimeSpan.ToString();
+
+
+            try
+            {
+                string AppSelection = ((Appointments)AppointmentList.SelectedItem).EventName;
+                if(AppSelection == "")
+                {
+                    MessageDialog dialog = new MessageDialog("Item not selected for editing!", "Oops..!");
+                    await dialog.ShowAsync();
+                }
+                else
+                {
+                    string EventName = EvntNameBox.Text;
+                    string Location = LocationBox.Text;
+                    string EventDate = FinalDate;
+                    string StartTime = StartTimeStr;
+                    string EndTime = EndTimeStr;
+
+
+                    conn.CreateTable<Appointments>();
+                    var query1 = conn.Table<Appointments>();
+                    var query3 = conn.Query<Appointments>("UPDATE Appointments SET EventName ='" + EventName + "', Location ='" + Location 
+                        + "', EventDate ='" + EventDate + "', StartTime ='" + StartTime + "', EndTime ='" + EndTime + "' WHERE EventName ='" + AppSelection + "'");
+                    Results();
+                   
+                }
+
+
+            }
+            catch (NullReferenceException)
+            {
+                MessageDialog dialog = new MessageDialog("Null Item", "Oops..!");
+                await dialog.ShowAsync();
+            }
+
+        }
+
+        private async void AppointmentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                string AppSelectionName = ((Appointments)AppointmentList.SelectedItem).EventName;
+                string AppSelectionLocation = ((Appointments)AppointmentList.SelectedItem).Location;
+
+                EvntNameBox.Text = AppSelectionName;
+                LocationBox.Text = AppSelectionLocation;
+            }
+            catch (NullReferenceException)
+            {
+                doNothing();
+            }
+
+
+
+        }
+
+        public void doNothing()
+        {
+            
+        }
     }
+
 }
