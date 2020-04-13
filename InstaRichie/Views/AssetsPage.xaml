@@ -108,19 +108,23 @@
             <RelativePanel.Above>pageFooter</RelativePanel.Above>
             <PivotItem Header="Assets">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="589*"/>
+                        <ColumnDefinition Width="149*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="150"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel x:Name="pageStart" Grid.Row="0" VerticalAlignment="Top"
                                 HorizontalAlignment="Stretch"
-                                Orientation="Vertical" Margin="10,0,10,0">
+                                Orientation="Vertical" Margin="10,0,10,0" Grid.ColumnSpan="2">
                         <TextBox x:Name="AssetNameText" PlaceholderText="Car, House, Valuables" Header="Asset Name"/>
                         <TextBox x:Name="AssetValue" PlaceholderText="100.00" TextWrapping="Wrap" InputScope="Number" Header="Asset Value"/>
                     </StackPanel>
                     <ListView x:Name="AssetListView" Grid.Row="1" HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
-                                ItemTemplate="{StaticResource AssetListDatavalue}">
+                                ItemTemplate="{StaticResource AssetListDatavalue}" Grid.ColumnSpan="2">
                         <RelativePanel.Below>pageStart</RelativePanel.Below>
                     </ListView>
                 </Grid>
@@ -133,17 +137,21 @@
                                 Orientation="Vertical" Margin="10,0,10,0">
                 <TextBox x:Name="AssetNameText" Header="Asset Name"/>
                 <TextBox x:Name="AssetValue" TextWrapping="Wrap" InputScope="Number" Header="Asset Value"/>
-                --><!--<StackPanel Orientation="Horizontal">
+                -->
+        <!--<StackPanel Orientation="Horizontal">
                     <Button x:Name="AddWish" Content="Add Account" Margin="0,20,0,0" Click="AddData"/>
                     <Button x:Name="DeleteItem" Content="Delete Item" Margin="15,20,0,0" Click="DeleteAccout_Click"/>
-                </StackPanel>--><!--
+                </StackPanel>-->
+        <!--
             </StackPanel>
         </Grid>
         <ListView x:Name="AssetListView" HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch" Height="350"
                   RelativePanel.Below="PageContent"
                   ItemTemplate="{StaticResource AssetListDatavalue}">
-            --><!--Add here--><!--
+            -->
+        <!--Add here-->
+        <!--
         </ListView>-->
 
 

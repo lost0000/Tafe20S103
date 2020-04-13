@@ -98,8 +98,6 @@
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
 
-
-
             <!--  Wish List button  -->
             <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:WishListPage" 
                                           AutomationProperties.Name="Jerry"
@@ -111,24 +109,36 @@
                                Text="WishList" />
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
-        
-        
-        <!-- AppointmentPage Button -->
-            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:AppointmentPage" 
+            <!--ShoppingLISTCODE-->
+
+            <!-- ShoppingList //MARIELA-->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:ShoppingListPage" 
                                           AutomationProperties.Name="Jerry"
                                           >
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Width="48" Height="48"
+                		Symbol="Shop" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Shopping List" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+            <!--END SHOPPING LIST //MARIELA-->
+
+            <!-- AppointmentPage Button -->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:AppointmentPage" >
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48" Height="48"
+
                 		Symbol="ProtectedDocument" />
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
                                Text="Appointment Page" />
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
 
-        
+            <!-- END APPOIINTMENT PAGE-->
+
         </Controls:HamburgerMenu.PrimaryButtons>
-        
-        
+
         <Controls:HamburgerMenu.SecondaryButtons>
             <!--  settingspage button  -->
             <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageParameter="0"
