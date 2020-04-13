@@ -80,6 +80,8 @@
             <controls:PageHeader.PrimaryCommands>
                 <AppBarButton Icon="Add" Label="Add Shopping Item" Click="AddButton_Click"  />
                 <AppBarButton Icon="Delete" Label="Delete Shopping Item" Click="DeleteButton_Click" />
+                <AppBarButton Icon="Edit" Label="Edit Shopping Item" Click="UpdateButton_Click" />
+                <AppBarButton x:Name ="btnSave" Icon="Save" Label="Save Changes" Click="SaveButton_Click" Visibility="Collapsed"/>
             </controls:PageHeader.PrimaryCommands>
         </controls:PageHeader>
 

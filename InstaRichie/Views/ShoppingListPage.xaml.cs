@@ -199,6 +199,127 @@ namespace StartFinance.Views
 
         }
 
+        //button edit
+        private async void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                string ShoppingItemID = ((ShoppingDetails)ShoppingList.SelectedItem).ShoppingItemID;
+                string ShopName = ((ShoppingDetails)ShoppingList.SelectedItem).ShopName;
+                string ShoppingItem = ((ShoppingDetails)ShoppingList.SelectedItem).ItemName;
+                Double QuotedPrice = ((ShoppingDetails)ShoppingList.SelectedItem).QuotedPrice;
+
+
+                var dateNow = DateTime.Now;
+                var selectedDate = dpShoppingDate.Date;
+
+                String cDay = selectedDate.Day.ToString();
+                String cMonth = selectedDate.Month.ToString();
+                String cYear = selectedDate.Year.ToString();
+                String cDate = cDay + "-" + cMonth + "-" + cYear;
+
+                if (ShoppingItem == "")//flow1
+                {
+                    MessageDialog updateDialog = new MessageDialog("Please select Item to edit", "Something is wrong");
+                    await updateDialog.ShowAsync();
+                }
+                else
+                {
+                    tbShoppingItemID.Text = ShoppingItemID;//flow2
+                    tbShopName.Text = ShopName;
+                    tbItemName.Text = ShoppingItem;
+                    //dpShoppingDate.Date = dateNow;
+                    tbPriceQuoted.Text = Convert.ToString(QuotedPrice);
+
+
+                    btnSave.Visibility = Visibility.Visible;
+                }
+
+            }
+            catch (NullReferenceException)
+            {
+                MessageDialog updatedDialog = new MessageDialog("Please select Item", "Something is wrong");
+                await updatedDialog.ShowAsync();
+            }
+        }
+
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var shoppingID = tbShoppingItemID.Text;
+            var shopName = tbShopName.Text;
+            var itemName = tbItemName.Text;
+            var quotedPrice = tbPriceQuoted.Text;
+
+            var dateNow = DateTime.Now;
+            var selectedDate = dpShoppingDate.Date;
+
+            String cDay = selectedDate.Day.ToString();
+            String cMonth = selectedDate.Month.ToString();
+            String cYear = selectedDate.Year.ToString();
+            String cDate = cDay + "-" + cMonth + "-" + cYear;
+
+            if (shoppingID == "")
+            {
+                MessageDialog missingData = new MessageDialog("Some fields are missing. Please fill out correct information", "Something is wrong.");
+                await missingData.ShowAsync();
+                tbShoppingItemID.Focus(FocusState.Programmatic);
+                return;
+            }
+            else if (shopName == "")
+            {
+                MessageDialog missingData = new MessageDialog("Some fields are missing. Please fill out correct information", "Something is wrong.");
+                await missingData.ShowAsync();
+                tbShopName.Focus(FocusState.Programmatic);
+                return;
+            }
+            else if (itemName == "")
+            {
+                MessageDialog missingData = new MessageDialog("Some fields are missing. Please fill out correct information", "Something is wrong.");
+                await missingData.ShowAsync();
+                tbItemName.Focus(FocusState.Programmatic);
+                return;
+            }
+            else if (quotedPrice == "")
+            {
+                MessageDialog missingData = new MessageDialog("Some fields are missing. Please fill out correct information", "Something is wrong.");
+                await missingData.ShowAsync();
+                tbPriceQuoted.Focus(FocusState.Programmatic);
+                return;
+            }
+            else if (selectedDate > dateNow)
+            {
+                MessageDialog missingData = new MessageDialog("You've Selected a date that hasnt happened yet. Please fix", "Something is wrong");
+                await missingData.ShowAsync();
+                dpShoppingDate.Date = dateNow;
+                dpShoppingDate.Focus(FocusState.Programmatic);
+                return;
+
+            }
+            else
+            {
+                conn.CreateTable<ShoppingDetails>();
+                string ShoppingItem = ((ShoppingDetails)ShoppingList.SelectedItem).ItemName;
+                var queryUpdate = conn.Query<ShoppingDetails>("UPDATE ShoppingDetails SET " +
+                    "ShoppingItemID='" + shoppingID + "', " +
+                    "ShopName='" + shopName + "', " +
+                    "ItemName='" + itemName + "', " +
+                    "ShoppingDate='" + cDate + "', " +
+                    "QuotedPrice = '" + quotedPrice + "'"
+                    +
+                    "WHERE ItemName ='" + ShoppingItem + "'"
+                    );
+
+
+                MessageDialog saveUpdateDialog = new MessageDialog("Changes saved.", "YAY!");
+                await saveUpdateDialog.ShowAsync();
+                Results();
+                clearFields();
+
+                btnSave.Visibility = Visibility.Collapsed;
+            }
+        }
+
 
 
     }
